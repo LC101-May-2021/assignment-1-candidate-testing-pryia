@@ -9,8 +9,9 @@ let candidateName = "";
  let question = "Who was the first American woman in space? ";
  let correctAnswer = "Sally Ride";
  let candidateAnswer = "";
-
-
+let questions = ["who was the first American women in space? ", "True or false: 5 kilometer == 5000meters? ", "(5 + 3)/2 * 10=? ", "Given the array [8, 'Orbit', 'Trajectory', 45], what entry is at index 2? ", "What is the minimum crew size for this ISS? ",];
+let correctAnswers = ["Sally Ride", "true", "40", "Trajectory", "3"];
+let candidateAnswers =[];
 
 function askForName() {
   // TODO 1.1b: Ask for candidate's name //
@@ -19,30 +20,36 @@ candidateName = input.question("what is your name?: ");
 
 function askQuestion() {
   // TODO 1.2b: Ask candidate the question and assign the response as candidateAnswer //
- candidateAnswer = input.question(question);
-
-
+ 
+  for (let i=0;i<questions.length;i++){
+      candidateAnswers[i] = input.question(questions[i]);
+      console.log("Your Answer:",candidateAnswers[i]);
+      console.log("Correct Answer:",correctAnswers[i],"\n");
+    }
 }
 
 function gradeQuiz(candidateAnswers) {
 
   // TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly // 
-  if(candidateAnswer == correctAnswer){
-    console.log("Your answer is correct");
-  } else{
-    console.log("Your answer is incorrect");
-  }
-
-  let grade;
-
-  // if (grade == "correct!") {
-  // console.log("your asnwer is correct!");
-  // } else if ()
-
   
+let numberOfCorrectAnswers=0;
+let numberOfQuestions=candidateAnswers.length;
 
+for (let i=0; i<numberOfQuestions;i++){
+  if (String(candidateAnswers[i]).toLowerCase()==correctAnswers[i].toLowerCase()){
+    numberOfCorrectAnswers +=1;
+   }
+  }
+  let grade = numberOfCorrectAnswers/numberOfQuestions*100;
+  let status = "PASSED";
+  if (grade<80){
+    status = "FAILED";
+  } 
+console.log('>>> Overall Grade: '+grade+'% ('+numberOfCorrectAnswers+' of '+numberOfQuestions+' responses correct) <<<');
+console.log('>>> Status: '+status+' <<<')
   return grade;
 }
+  
 
 function runProgram() {
   askForName();
@@ -59,6 +66,9 @@ module.exports = {
   question: question,
   correctAnswer: correctAnswer,
   candidateAnswer: candidateAnswer,
+  questions: questions,
+  correctAnswers: correctAnswers,
+  candidateAnswers: candidateAnswers,
   gradeQuiz: gradeQuiz,
   runProgram: runProgram
 };
